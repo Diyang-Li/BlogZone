@@ -1,0 +1,21 @@
+<!--<!DOCTYPE html>-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/left.css}">
+</head>
+<body>
+    <div id="div_friendList" >
+        我的好友<br/>
+        <ul>
+            <li th:if="${#lists.isEmpty(session.userBasic.friendList)}">一个好友也没有</li>
+            <li th:unless="${#lists.isEmpty(session.userBasic.friendList)}" th:each="friend : ${session.userBasic.friendList}">
+<!--                ||遇到${}thymleaf表达式的时候，可以认识这是个变量，完成自动拼接字符串-->
+            <a th:href="@{|/user.do?operate=friend&id=${friend.id}|}" th:text="${friend.getNickName()}" target="_top"></a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

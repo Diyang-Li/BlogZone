@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE beans [
+        <!ELEMENT beans (bean*)>
+        <!ELEMENT bean (property*)>
+        <!ELEMENT property (#PCDATA)>
+
+        <!ATTLIST bean id ID #REQUIRED>
+        <!ATTLIST bean class CDATA #IMPLIED>
+        <!ATTLIST property name CDATA #IMPLIED>
+        <!ATTLIST property ref IDREF #IMPLIED>
+        ]>
+<beans>
+    <bean id = "UserBasicDAO" class = "com.atguigu.qqzone.dao.impl.UserBasicDAOImpl"/>
+    <bean id = "TopicDAO" class="com.atguigu.qqzone.dao.impl.TopicDAOImpl"/>
+    <bean id="ReplyDAO" class="com.atguigu.qqzone.dao.impl.ReplyDAOImpl"/>
+    <bean id="HostReplyDAO" class="com.atguigu.qqzone.dao.impl.HostReplyDAOImpl"></bean>
+
+    <bean id = "TopicService" class="com.atguigu.qqzone.service.impl.TopicServiceImpl">
+        <property name = "topicDAO" ref="TopicDAO"/>
+        <property name="replyService" ref="ReplyService"/>
+        <property name="userBasicService" ref="UserBasicService"/>
+    </bean>
+    <bean id="ReplyService" class="com.atguigu.qqzone.service.impl.ReplyServiceImpl">
+        <property name="replyDAO" ref="ReplyDAO"/>
+        <property name="hostReplyService" ref="HostReplyService"/>
+        <property name="userBasicService" ref="UserBasicService"/>
+    </bean>
+    <bean id="HostReplyService" class="com.atguigu.qqzone.service.impl.HostReplyServiceImpl">
+        <property name="hostReplyDAO" ref="HostReplyDAO"/>
+    </bean>
+    <bean id = "UserBasicService" class="com.atguigu.qqzone.service.impl.UserBasicServiceImpl">
+        <property name = "userBasicDAO" ref = "UserBasicDAO"/>
+    </bean>
+
+    <bean id = "user" class="com.atguigu.qqzone.controller.UserController">
+        <property name = "userBasicService" ref="UserBasicService"/>
+        <property name="topicService" ref="TopicService"/>
+    </bean>
+    <bean id="topic" class="com.atguigu.qqzone.controller.TopicController">
+        <property name="topicService" ref="TopicService"/>
+    </bean>
+    <bean id="page" class="com.atguigu.myssm.myspringmvc.PageController"/>
+    <bean id="reply" class="com.atguigu.qqzone.controller.ReplyController">
+        <property name="replyService" ref="ReplyService"/>
+    </bean>
+    <bean id="hostReply" class="com.atguigu.qqzone.controller.HostReplyController">
+        <property name="hostReplyService" ref="HostReplyService"/>
+    </bean>
+</beans>
+
+
+
+
+
+<!--
+1.概念
+HTML : 超文本标记语言 HyperText Markup Language
+XML : 可扩展的标记语言 Extensible Markup Language
+HTML是XML的一个子集
+
+2.XML包含三个部分：
+1) XML声明 ， 而且声明这一行代码必须在XML文件的第一行
+2) DTD 文档类型定义 document type definition
+3) XML正文
+ -->
